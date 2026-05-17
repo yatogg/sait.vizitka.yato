@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <!-- БЛОК 1: О СЕБЕ -->
+    <section id="about" class="section-block">
+        <h2 class="section-title">О себе</h2>
+        <p style="line-height: 1.7; color: #475569; margin-bottom: 1.5rem;">
+            Привет! Я занимаюсь разработкой бэкенд-приложений на Python. Проектирую базы данных, пишу чистый и поддерживаемый код, интегрирую интерфейсы с серверной логикой фреймворка Flask.
+        </p>
+        <p style="line-height: 1.7; color: #475569;">
+            Этот сайт разработан полностью вручную без конструкторов в рамках учебного проекта. Данные о моих работах и сообщения из формы ниже обрабатываются на сервере и сохраняются в СУБД.
+        </p>
+    </section>
+
+    <!-- БЛОК 2: ПОРТФОЛИО -->
+    <section id="portfolio" class="section-block">
+        <h2 class="section-title">Мои проекты</h2>
+        <div class="project-grid">
+            {% for project in projects %}
+            <div class="project-item">
+                <h3 style="font-size: 1.15rem; font-weight: 600; color: #0f172a; margin-bottom: 0.5rem;">{{ project.title }}</h3>
+                <p style="font-size: 0.9rem; color: #64748b; line-height: 1.5; margin-bottom: 1rem;">{{ project.description }}</p>
+                {% if project.link %}
+                <a href="{{ project.link }}" target="_blank" style="color: #4f46e5; text-decoration: none; font-size: 0.85rem; font-weight: 600;">Открыть репозиторий &rarr;</a>
+                {% endif %}
+            </div>
+            {% else %}
+            <p style="color: #94a3b8; grid-column: 1/-1;">Проекты ещё не добавлены в БД администратором.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- БЛОК 3: КОНТАКТЫ -->
+    <section id="contacts" class="section-block">
+        <h2 class="section-title">Связаться со мной</h2>
+        <form method="POST" action="{{ url_for('contacts') }}">
+            <div class="form-group-custom">
+                <input type="text" name="name" placeholder="Ваше имя" required>
+            </div>
+            <div class="form-group-custom">
+                <input type="email" name="email" placeholder="Ваш Email" required>
+            </div>
+            <div class="form-group-custom">
+                <textarea name="text" rows="4" placeholder="Ваше сообщение..." required></textarea>
+            </div>
+            <button type="submit" class="btn-submit-custom">Отправить сообщение</button>
+        </form>
+    </section>
+
+{% endblock %}

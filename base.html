@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Портфолио</title>
+    <link href="https://cloudflare.com" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <div class="site-wrapper">
+        <!-- ЛЕВАЯ ПАНЕЛЬ С ПРОФИЛЕМ -->
+        <aside class="profile-sidebar">
+            <div class="profile-info">
+                <img src="https://unsplash.com" alt="Аватар">
+                <h1>Иван Иванов</h1>
+                <span class="profile-tag">Flask Developer</span>
+            </div>
+
+            <!-- Навигация скроллит страницу, а не перезагружает ее -->
+            <ul class="sidebar-nav">
+                <li><a href="#about" class="active"><i class="fa-regular fa-user"></i> О себе</a></li>
+                <li><a href="#portfolio"><i class="fa-regular fa-folder-open"></i> Портфолио</a></li>
+                <li><a href="#contacts"><i class="fa-regular fa-envelope"></i> Контакты</a></li>
+                {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('admin_panel') }}" style="color: #f59e0b;"><i class="fa-solid fa-gear"></i> Админка</a></li>
+                    <li><a href="{{ url_for('logout') }}" style="color: #ef4444;"><i class="fa-solid fa-sign-out"></i> Выйти</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}" style="opacity: 0.3; font-size: 0.8rem;"><i class="fa-solid fa-lock"></i> Войти</a></li>
+                {% endif %}
+            </ul>
+
+            <div class="sidebar-footer">
+                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.4);">&copy; 2026 Сделано на Flask</p>
+            </div>
+        </aside>
+
+        <!-- ПРАВАЯ ЧАСТЬ С КОНТЕНТОМ -->
+        <main class="content-area">
+            <!-- Уведомления от сервера -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div style="padding: 1rem; background: #bbf7d0; color: #166534; border-radius: 12px; margin-bottom: 2rem; font-size: 0.9rem;">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <!-- Скрипт для подсветки активных пунктов меню при скролле -->
+    <script>
+        const links = document.querySelectorAll('.sidebar-nav a');
+        const sections = document.querySelectorAll('.section-block');
+
+        document.querySelector('.content-area').addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (document.querySelector('.content-area').scrollTop >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+            links.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center hero-section py-4">
+    <div class="col-md-5 mb-5 mb-md-0">
+        <span class="text-uppercase tracking-wider text-muted small fw-bold d-block mb-2">Обратная связь</span>
+        <h2 class="display-5 fw-bold text-dark mb-3" style="letter-spacing: -1px;">Давайте создадим что-то <span style="color: #4f46e5;">вместе</span></h2>
+        <p class="text-secondary mb-4">Заполните форму справа, чтобы отправить мне сообщение. Все письма сохраняются напрямую в базу данных SQLite, и я смогу прочитать их через панель администратора.</p>
+
+        <!-- Быстрые контакты с иконками FontAwesome -->
+        <div class="d-flex flex-column gap-3 mt-4">
+            <div class="d-flex align-items-center gap-3">
+                <div class="bg-white rounded-circle shadow-sm d-flex align-items-center justify-content-center" style="width: 45px; height: 45px; border: 1px solid #e2e8f0;">
+                    <i class="fa-regular fa-envelope text-primary"></i>
+                </div>
+                <div>
+                    <span class="text-muted d-block small">Email для связи</span>
+                    <a href="mailto:your_email@example.com" class="text-dark fw-medium text-decoration-none">your_email@example.com</a>
+                </div>
+            </div>
+
+            <div class="d-flex align-items-center gap-3">
+                <div class="bg-white rounded-circle shadow-sm d-flex align-items-center justify-content-center" style="width: 45px; height: 45px; border: 1px solid #e2e8f0;">
+                    <i class="fa-brands fa-telegram text-info"></i>
+                </div>
+                <div>
+                    <span class="text-muted d-block small">Telegram</span>
+                    <a href="https://t.me" target="_blank" class="text-dark fw-medium text-decoration-none">@your_username</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 offset-md-1">
+        <div class="card card-custom p-4 shadow-sm">
+            <form id="contactForm" method="POST" action="{{ url_for('contacts') }}" novalidate>
+                <div class="mb-3">
+                    <label for="name" class="form-label fw-medium text-dark small">Ваше имя</label>
+                    <input type="text" class="form-control p-3 bg-light border-0" id="name" name="name" style="border-radius: 12px; font-size: 0.95rem;" placeholder="Иван Иванов" required>
+                    <div class="invalid-feedback">Пожалуйста, введите ваше имя.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label fw-medium text-dark small">Email адрес</label>
+                    <input type="email" class="form-control p-3 bg-light border-0" id="name" name="email" style="border-radius: 12px; font-size: 0.95rem;" placeholder="name@example.com" required>
+                    <div class="invalid-feedback">Введите корректный адрес электронной почты.</div>
+                </div>
+                <div class="mb-4">
+                    <label for="text" class="form-label fw-medium text-dark small">Ваше сообщение</label>
+                    <textarea class="form-control p-3 bg-light border-0" id="text" name="text" rows="4" style="border-radius: 12px; font-size: 0.95rem;" placeholder="Опишите вашу идею или вопрос..." required></textarea>
+                    <div class="invalid-feedback">Поле сообщения не может быть пустым.</div>
+                </div>
+                <button type="submit" class="btn btn-portfolio-primary w-100 p-3 fs-6">
+                    Отправить сообщение <i class="fa-regular fa-paper-plane ms-2"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

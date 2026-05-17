@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="mb-4">Панель управления</h1>
+
+<div class="row">
+    <!-- Форма добавления проекта -->
+    <div class="col-md-5 mb-4">
+        <div class="card p-3 shadow-sm">
+            <h4>Добавить проект</h4>
+            <form method="POST">
+                <div class="mb-2">
+                    <label class="form-label">Название</label>
+                    <input type="text" class="form-control" name="title" required>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label">Описание</label>
+                    <textarea class="form-control" name="description" rows="3" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Ссылка</label>
+                    <input type="url" class="form-control" name="link">
+                </div>
+                <button type="submit" class="btn btn-success w-100">Сохранить в БД</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Список входящих сообщений -->
+    <div class="col-md-7">
+        <div class="card p-3 shadow-sm">
+            <h4>Полученные сообщения</h4>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Имя</th>
+                            <th>Email</th>
+                            <th>Текст</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for msg in messages %}
+                        <tr>
+                            <td>{{ msg.name }}</td>
+                            <td><a href="mailto:{{ msg.email }}">{{ msg.email }}</a></td>
+                            <td>{{ msg.text }}</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="3" class="text-center text-muted">Сообщений пока нет.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
